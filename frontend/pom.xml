@@ -21,6 +21,7 @@
 		<maven-frontend.plugin>1.6</maven-frontend.plugin>
 		<node.version>v10.9.0</node.version>
 		<npm.version>6.4.0</npm.version>
+		<yarn.version>v1.9.4</yarn.version>
 	</properties>
 
 	<build>
@@ -43,16 +44,17 @@
 				<groupId>com.github.eirslett</groupId>
 				<artifactId>frontend-maven-plugin</artifactId>
 				<version>${maven-frontend.plugin}</version>
+				<configuration>
+					<nodeVersion>${node.version}</nodeVersion>
+					<npmVersion>${npm.version}</npmVersion>
+					<yarnVersion>${yarn.version}</yarnVersion>
+				</configuration>
 				<executions>
 					<execution>
 						<id>install node and npm</id>
 						<goals>
 							<goal>install-node-and-npm</goal>
 						</goals>
-						<configuration>
-							<nodeVersion>${node.version}</nodeVersion>
-							<npmVersion>${npm.version}</npmVersion>
-						</configuration>
 					</execution>
 					<execution>
 						<id>npm install</id>
@@ -69,12 +71,60 @@
 							<arguments>run build</arguments>
 						</configuration>
 					</execution>
+<!--
+					<execution>
+						<id>install node and yarn</id>
+						<goals>
+							<goal>install-node-and-yarn</goal>
+						</goals>
+						<phase>generate-resources</phase>
+					</execution>
+					<execution>
+						<id>yarn install</id>
+						<goals>
+							<goal>yarn</goal>
+						</goals>
+						<configuration>
+							<arguments>install</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>yarn lint</id>
+						<goals>
+							<goal>yarn</goal>
+						</goals>
+						<configuration>
+							<arguments>lint</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>yarn build</id>
+						<goals>
+							<goal>yarn</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<arguments>build</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>yarn test</id>
+						<goals>
+							<goal>yarn</goal>
+						</goals>
+						<phase>test</phase>
+						<configuration>
+							<arguments>test -watch false</arguments>
+							<failOnError>true</failOnError>
+						</configuration>
+					</execution>
+ -->
 				</executions>
 			</plugin>
 		</plugins>
 		<resources>
 			<resource>
-				<directory>target/client</directory>
+				<directory>dist/frontend</directory>
 				<targetPath>static</targetPath>
 			</resource>
 		</resources>
